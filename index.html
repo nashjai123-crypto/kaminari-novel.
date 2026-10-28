@@ -1,0 +1,15 @@
+</main><footer>© Kaminari Novel · Prototaip peribadi</footer>
+</div>
+<script>
+(() => {
+  const KEY="kaminariNovelStories_v1";
+  // DEMO ONLY: this code is visible in the page source. Replace with real server-side authentication before public launch.
+  const OWNER_CODE="KN-OWNER-2026";
+  let isOwner=false,currentStoryId=null;
+  const $=id=>document.getElementById(id);
+  const views={library:$("libraryView"),login:$("loginView"),add:$("addView"),reader:$("readerView")};
+  function loadStories(){try{const v=JSON.parse(localStorage.getItem(KEY)||"[]");return Array.isArray(v)?v:[]}catch(e){return[]}}
+  function saveStories(stories){try{localStorage.setItem(KEY,JSON.stringify(stories));return true}catch(e){alert("Cerita tidak dapat disimpan. Ruang storan mungkin penuh atau pelayar menyekat storan.");return false}}
+  function showView(name){if(name==="add"&&!isOwner){name="login"}Object.entries(views).forEach(([k,e])=>e.classList.toggle("hidden",k!==name));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===name));window.scrollTo({top:0,behavior:"smooth"})}
+  function escapeText(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+  function excerpt(t,n=150){t=String(t||"").trim();return t.length>n?t.slice(0,n)+"…":t}
